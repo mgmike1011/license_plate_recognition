@@ -4,7 +4,7 @@ import imutils
 import numpy as np
 from matplotlib import pyplot as plt
 
-img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (19).jpg')
+img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (9).jpg')
 t_start = time.perf_counter()
 img = cv2.resize(img, (600, 450), interpolation=cv2.INTER_CUBIC)
 img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #konwersja do skali szarości
