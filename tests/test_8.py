@@ -5,7 +5,7 @@ import imutils
 import numpy as np
 from matplotlib import pyplot as plt
 
-img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (19).jpg')
+img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (2).jpg')
 t_start = time.perf_counter()
 img = cv2.resize(img, (600, 450), interpolation=cv2.INTER_CUBIC)
 img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #konwersja do skali szarości
@@ -107,7 +107,7 @@ for c in cnts:
     area = cv2.contourArea(c)
     if 1670 < area < 12000:
         x, y, w, h = cv2.boundingRect(c) # <-- Get rectangle here
-        # cv2.rectangle(tablica, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        cv2.rectangle(tablica, (x, y), (x+w, y+h), (0, 255, 0), 2)
         letter = [c, x, y, w, h]
         litery.append(letter)
 litery_ = sorted(litery, key=lambda x: x[1])
@@ -119,15 +119,18 @@ for i in range(len(litery_)-1):
 # cv2.rectangle(tablica, (litery_[d][1], litery_[d][2]), (litery_[d][1]+litery_[d][3], litery_[d][2]+litery_[d][4]), (0, 255, 0), 2)
 for index in sorted(liter_to_pop, reverse=True):
     del litery_[index]
-
+# Do usuniecia ##################
 for d in range(len(litery_)):
     cv2.rectangle(tablica, (litery_[d][1], litery_[d][2]), (litery_[d][1]+litery_[d][3], litery_[d][2]+litery_[d][4]), (0, 255, 0), 2)
-
-
+# ##################
+# Wycięcie pojedynczej litery
+d = 3
+p1 = np.zeros((litery_[d][4], litery_[d][3]), dtype=np.uint8)
+p1 = tablica[litery_[d][2]:(litery_[d][2]+litery_[d][4]), litery_[d][1]:(litery_[d][1]+litery_[d][3])]
 t_stop = time.perf_counter()
 print(f'test_8: {t_stop - t_start} s')
+print(p1.shape)
 while True:
-
     cv2.imshow('Image', tablica)
     if cv2.waitKey(10) == ord('q'):
         break
