@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 
 # Wczytanie zdjęcia
-img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (19).jpg')
+img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (31).jpg')
 # Wczytanie template ze znakami
-template = cv2.imread('Template_2.png')
+template = cv2.imread('Template_5.png')
 template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 # Start Timera
 t_start = time.perf_counter()
@@ -205,10 +205,10 @@ for d in range(len(litery_)):
             else:
                 letter_read['H'] = 1
         elif 2300 < pt[0] < 2308:
-            if 'I' in letter_read:
-                letter_read['I'] += 1
+            if 'V' in letter_read:
+                letter_read['V'] += 1
             else:
-                letter_read['I'] = 1
+                letter_read['V'] = 1
         elif 2429 < pt[0] < 2435:
             if 'J' in letter_read:
                 letter_read['J'] += 1

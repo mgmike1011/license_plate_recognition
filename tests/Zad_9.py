@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 # Wczytanie zdjęcia
-img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (2).jpg')
+img = cv2.imread('/home/milosz/RiSA_1/SW/train/2023-05-08 (3).jpg')
 template = cv2.imread('Template_2.png')
 template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 # Start Timera
@@ -107,6 +107,8 @@ for d in range(len(litery_)):
     p1 = tablica[litery_[d][2]:(litery_[d][2]+litery_[d][4]), litery_[d][1]:(litery_[d][1]+litery_[d][3])]
     _, p1 = cv2.threshold(p1, 200, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     p1 = cv2.resize(p1, (128, 151), interpolation=cv2.INTER_CUBIC)
+    z = 0
+    cv2.imwrite(f'/home/milosz/Pictures/Screenshots/out_{z}/{d}.png', p1)
     # ZNAK
     # w, h = p1.shape[::-1]
     # res = cv2.matchTemplate(template_gray, p1, cv2.TM_CCOEFF_NORMED)
@@ -289,8 +291,7 @@ for d in range(len(litery_)):
     # print(letter_read)
     # out_letter = max(letter_read, key=letter_read.get)
     # out_letters += out_letter
-    z = 2
-    cv2.imwrite(f'/home/milosz/Pictures/Screenshots/out_{z}/{d}.png', p1)
+
 # Rozpoznawanie liter i cyfr
 print(out_letters)
 t_stop = time.perf_counter()
