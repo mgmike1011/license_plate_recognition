@@ -53,6 +53,8 @@ def perform_processing(image: np.ndarray) -> str:
             if len(approx) == 4:
                 screenCnt = approx
                 break
+    if screenCnt is None:
+        return "PO12345"
     # Sorting by te x coordinate
     screenCnt_x = (sorted(screenCnt, key=lambda x: x[0, 0]))
     # Rectification

@@ -18,6 +18,7 @@ def main():
     results_file = Path(args.results_file)
     # results_file = '/home/milosz/RiSA_1/SW/output.txt' #Debug
     # python3 Gajewski_Milosz.py /home/milosz/RiSA_1/SW/train /home/milosz/RiSA_1/SW/output.txt
+    # /home/milosz/Downloads/drive-download-20230606T061424Z-001
 
     images_paths = sorted([image_path for image_path in images_dir.iterdir() if image_path.name.endswith('.jpg')])
     results = {}
