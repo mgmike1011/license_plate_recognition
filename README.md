@@ -36,7 +36,7 @@ Algorytm został podzielony na trzy części realizujące kolejne etapy przetwar
 ## Klasyfikacja znalezionych liter
 1. Wykonanie operacji progowania,
 2. Skanowanie znalezionej litery do rozdzielczości 128px x 151px
-3. Wykonanie operacji cv2.matchTemplate() z dostarczonym szablonem,
+3. Wykorzystanie dedykowanego narzędzia z biblioteki scikit-image - [structural_similarity](https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.structural_simi).
 4. Klasyfikacja litery,
 5. Weryfikacja i walidacja znalezionego ciągu znaków
 6. Zwrócenie napisu.
@@ -45,5 +45,15 @@ Algorytm został podzielony na trzy części realizujące kolejne etapy przetwar
 ```console
 python3 Gajewski_Milosz.py /path/to/directory/train /path/to/output.txt
 ```
-# Szablon znaków
+# Inne testowane podejścia i metody
+Podczas tworzenia programu przetestowane zostały różne sposoby wyznaczania konturu tablicy na zdjęciu, jak również klasyfikacji znaków. Miały one jednak niższą skuteczność działania niż prezentowany finalny algorytm.
+## Inne testowane metody wyznaczania tablicy na zdjęciu:
+- Rozmywanie -> Canny -> Znajdowanie konturów -> Sortowanie konturów względem area -> Długość łuku -> Aproksymacja do prostokąta -> Maska,
+- Progowanie -> Dylacja -> Znajdowanie konturów -> Długość łuku -> Aproksymacja do prostokąta -> Sortowanie kształtów,
+- Adaptacyjne progowanie -> Dylatacja -> Znajdowanie konturów -> Długość łuku -> Aproksymacja do prostokąta -> Sortowanie kształtów,
+- Stworzenie dwóch rozmytych obrazów GaussianBlur o różnych parametrach -> Odjęcie stworzonych obrazów od siebie -> Canny -> Znajdowanie konturów -> Długość łuku -> Aproksymacja do prostokąta -> Sortowanie kształtów,
+- Stworzenie dwóch rozmytych obrazów GaussianBlur o różnych parametrach -> Odjęcie stworzonych obrazów od siebie -> Erozja -> Otwarcie ->Canny -> Znajdowanie konturów -> Długość łuku -> Aproksymacja do prostokąta -> Sortowanie kształtów,
+- Rozmywanie -> Canny -> Dylacja -> Znajdowanie konturów -> Długość łuku -> Aproksymacja do prostokąta -> Sortowanie kształtów.
+## Inne testowane metody klasyfikacji znaków
+### Szablon znaków - cv.matchTemplate()
 ![Szablon liter](processing/Template_5.png "Szablon znakow")
