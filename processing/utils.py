@@ -83,34 +83,39 @@ def perform_processing(image: np.ndarray) -> str:
     ret, thg = cv2.threshold(tablica, 200, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     opening = cv2.morphologyEx(thg, cv2.MORPH_OPEN, (3, 3))
     contours, hierarchy = cv2.findContours(opening, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    cnts = sorted(contours, key=cv2.contourArea, reverse=True)[:50]
-    litery = []
-    for c in cnts:
-        area = cv2.contourArea(c)
-        if 1460 < area < 12000:
-            x, y, w, h = cv2.boundingRect(c)
-            letter = [c, x, y, w, h]
-            litery.append(letter)
-    litery_ = sorted(litery, key=lambda x: x[1])
-    liter_to_pop = []
-    for i in range(len(litery_) - 1):
-        if (litery_[i + 1][1] + litery_[i + 1][3]) < (litery_[i][1] + litery_[i][3]):
-            liter_to_pop.append(i + 1)
-    for index in sorted(liter_to_pop, reverse=True):
-        del litery_[index]
-    out_letters = ''
-    for d in range(len(litery_)):
-        p1 = tablica[litery_[d][2]:(litery_[d][2] + litery_[d][4]), litery_[d][1]:(litery_[d][1] + litery_[d][3])]
-        _, p1 = cv2.threshold(p1, 200, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        p1 = cv2.resize(p1, (128, 151), interpolation=cv2.INTER_CUBIC)
-        biggest_similarity = 0
-        biggest_similarity_letter = ''
-        for l in mix_letters:
-            similarity = structural_similarity(p1, cv2.imread(MIX + '/' + l, cv2.IMREAD_GRAYSCALE))
-            if similarity >= biggest_similarity:
-                biggest_similarity = similarity
-                biggest_similarity_letter = l[0]
-        out_letters += biggest_similarity_letter
+    if contours is None:
+        return "PO12345"
+    try:
+        cnts = sorted(contours, key=cv2.contourArea, reverse=True)[:50]
+        litery = []
+        for c in cnts:
+            area = cv2.contourArea(c)
+            if 1460 < area < 12000:
+                x, y, w, h = cv2.boundingRect(c)
+                letter = [c, x, y, w, h]
+                litery.append(letter)
+        litery_ = sorted(litery, key=lambda x: x[1])
+        liter_to_pop = []
+        for i in range(len(litery_) - 1):
+            if (litery_[i + 1][1] + litery_[i + 1][3]) < (litery_[i][1] + litery_[i][3]):
+                liter_to_pop.append(i + 1)
+        for index in sorted(liter_to_pop, reverse=True):
+            del litery_[index]
+        out_letters = ''
+        for d in range(len(litery_)):
+            p1 = tablica[litery_[d][2]:(litery_[d][2] + litery_[d][4]), litery_[d][1]:(litery_[d][1] + litery_[d][3])]
+            _, p1 = cv2.threshold(p1, 200, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+            p1 = cv2.resize(p1, (128, 151), interpolation=cv2.INTER_CUBIC)
+            biggest_similarity = 0
+            biggest_similarity_letter = ''
+            for l in mix_letters:
+                similarity = structural_similarity(p1, cv2.imread(MIX + '/' + l, cv2.IMREAD_GRAYSCALE))
+                if similarity >= biggest_similarity:
+                    biggest_similarity = similarity
+                    biggest_similarity_letter = l[0]
+            out_letters += biggest_similarity_letter
+    except:
+        return "PO12345"
     # Verification
     if len(out_letters) == 0:
         out_letters += 'P'

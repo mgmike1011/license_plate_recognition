@@ -37,7 +37,7 @@ Algorytm został podzielony na trzy części realizujące kolejne etapy przetwar
 1. Wykonanie operacji progowania,
 2. Skanowanie znalezionej litery do rozdzielczości 128px x 151px
 3. Wykorzystanie dedykowanego narzędzia z biblioteki scikit-image - [structural_similarity](https://scikit-image.org/docs/stable/api/skimage.metrics.html#skimage.metrics.structural_simi).
-4. Klasyfikacja litery,
+4. Klasyfikacja litery - [zbiór wzorców liter](processing/MIX),
 5. Weryfikacja i walidacja znalezionego ciągu znaków
 6. Zwrócenie napisu.
 
